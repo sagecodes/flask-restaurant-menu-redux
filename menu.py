@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -16,8 +16,8 @@ item =  {'name':'Cheese Pizza','description':'made with fresh cheese','price':'$
 
 @app.route('/')
 @app.route('/restaurants/')
-def showRestaurants(restaurant_id):
-    return " This page will display all restaurants"
+def showRestaurants():
+    return render_template('restaurants.html', restaurants=restaurants)
 
 
 @app.route('/restaurant/new/')

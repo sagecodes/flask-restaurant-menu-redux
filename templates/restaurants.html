@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yum Tum Tum Restaurants</title>
+</head>
+<body>
+    <header><h1>Yum Tum Tum Restaurants:</h1></header>
+
+
+    {% for restaurant in restaurants %}
+
+    <p>
+    <a href='{{url_for('showMenu', restaurant_id = restaurant['id']) }}'>
+    {{restaurant['name']}}</a>
+    </p>
+
+    {% endfor %}
+
+</body>
+</html>
