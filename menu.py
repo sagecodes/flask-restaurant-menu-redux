@@ -14,28 +14,32 @@ items = [ {'name':'Cheese Pizza', 'description':'made with fresh cheese', 'price
 item =  {'name':'Cheese Pizza','description':'made with fresh cheese','price':'$5.99','course' :'Entree'}
 
 
+# Displays all the restaurants in a list. Home page of the application.
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
     return render_template('restaurants.html', restaurants=restaurants)
 
 
+# Form for creating a new restaurant.
 @app.route('/restaurant/new/')
 def newRestaurant():
     return render_template('newRestaurant.html')
 
 
-
+# Form for editing a restaurant already in the list.
 @app.route('/restaurant/<int:restaurant_id>/edit/')
 def editRestaurant(restaurant_id):
     return render_template('editRestaurant.html', restaurant=restaurant)
 
 
+# Page to confirm deleting selected restaurant.
 @app.route('/restaurant/<int:restaurant_id>/delete/')
 def deleteRestaurant(restaurant_id):
     return render_template('deleteRestaurant.html', restaurant=restaurant)
 
 
+# Displays all menu items for selected restaurant in a list.
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
