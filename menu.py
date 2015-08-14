@@ -46,10 +46,10 @@ def showMenu(restaurant_id):
     return render_template('menu.html', restaurant=restaurant, items=items)
 
 
-
+# form for creating new menu item for selected restaurant.
 @app.route('/restaurant/<int:restaurant_id>/menu/new/')
 def newMenuItem(restaurant_id):
-    return "This page will be for adding a new menu item for restaurant {}".format(restaurant_id)
+    return render_template('newMenuItem.html', restaurant=restaurant)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/')
