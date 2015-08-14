@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu {{ restaurant['name'] }}</title>
+</head>
+<body>
+    <h1>Menu for {{restaurant['name']}}</h1>
+
+    {% for item in items %}
+        <p>{{ item['name'] }}</p>
+        <p>{{ item['description'] }}</p>
+        <p>{{ item['price'] }}</p>
+        <hr>
+    {% endfor %}
+
+    <a href='{{url_for('showRestaurants') }}'><< All Restaurants</a>
+
+
+
+
+
+
+</body>
+</html>
