@@ -51,10 +51,10 @@ def showMenu(restaurant_id):
 def newMenuItem(restaurant_id):
     return render_template('newMenuItem.html', restaurant=restaurant)
 
-
+# form for editing menu item for selected restaurant.
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/')
 def editMenuItem(restaurant_id, menu_id):
-    return "This page will be for editing a menu item {}".format(menu_id)
+    return render_template('editMenuItem.html', restaurant=restaurant, item=item)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/')
