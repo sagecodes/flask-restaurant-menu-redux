@@ -35,14 +35,20 @@ def newRestaurant():
 
 
 # Form for editing a restaurant already in the list.
-@app.route('/restaurant/<int:restaurant_id>/edit/')
+@app.route('/restaurant/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
 def editRestaurant(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    return render_template('editRestaurant.html', restaurant=restaurant)
+    if request.method == 'POST':
+        editRestaurant = Restaurant(name = request.form['name'])
+        session.add(newRestaurant)
+        session.commit()
+        return redirect(url_for('showRestaurants'))
+    else:
+        return render_template('editRestaurant.html', restaurant=restaurant)
 
 
 # Page to confirm deleting selected restaurant.
-@app.route('/restaurant/<int:restaurant_id>/delete/')
+@app.route('/restaurant/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     return render_template('deleteRestaurant.html', restaurant=restaurant)
@@ -58,13 +64,14 @@ def showMenu(restaurant_id):
 
 
 # form for creating new menu item for selected restaurant.
-@app.route('/restaurant/<int:restaurant_id>/menu/new/')
+@app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     return render_template('newMenuItem.html', restaurant=restaurant)
 
 # form for editing menu item for selected restaurant.
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/')
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/',
+ methods=['GET', 'POST'])
 def editMenuItem(restaurant_id, menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     editItem = session.query(MenuItem).filter_by(id=menu_id).one()
@@ -72,7 +79,8 @@ def editMenuItem(restaurant_id, menu_id):
      editItem=editItem)
 
 # form for deleting menu item from selected restaurant.
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/')
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/',
+ methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     deleteItem = session.query(MenuItem).filter_by(id=menu_id).one()
