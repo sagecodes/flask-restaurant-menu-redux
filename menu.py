@@ -37,14 +37,15 @@ def newRestaurant():
 # Form for editing a restaurant already in the list.
 @app.route('/restaurant/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
 def editRestaurant(restaurant_id):
-    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    editedRestaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     if request.method == 'POST':
-        editRestaurant = Restaurant(name = request.form['name'])
-        session.add(newRestaurant)
+        if request.form['name']:
+            editedRestaurant.name = request.form['name']
+        session.add(editedRestaurant)
         session.commit()
         return redirect(url_for('showRestaurants'))
     else:
-        return render_template('editRestaurant.html', restaurant=restaurant)
+        return render_template('editRestaurant.html', restaurant=editedRestaurant)
 
 
 # Page to confirm deleting selected restaurant.
