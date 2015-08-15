@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delete {{restaurant['name']}} </title>
+    <title>Delete {{restaurant.name}} </title>
 </head>
 <body>
-    <h1> Are you sure you want to delete "{{restaurant['name']}}"? </h1>
+    <h1> Are you sure you want to delete "{{restaurant.name }}"? </h1>
 
     <form action="{{ url_for('deleteRestaurant',restaurant_id = restaurant['id'])}}" method = 'post'>
     <input type='submit', value = 'Delete'>
