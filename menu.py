@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, redirect
 
 app = Flask(__name__)
 
@@ -23,9 +23,15 @@ def showRestaurants():
 
 
 # Form for creating a new restaurant.
-@app.route('/restaurant/new/')
+@app.route('/restaurant/new/', methods=['GET', 'POST'])
 def newRestaurant():
-    return render_template('newRestaurant.html')
+    if request.method == 'POST':
+        newRestaurant = Restaurant(name = request.form['name'])
+        session.add(newRestaurant)
+        session.commit()
+        return redirect(url_for('showRestaurants'))
+    else:
+        return render_template('newRestaurant.html')
 
 
 # Form for editing a restaurant already in the list.
@@ -62,14 +68,16 @@ def newMenuItem(restaurant_id):
 def editMenuItem(restaurant_id, menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     editItem = session.query(MenuItem).filter_by(id=menu_id).one()
-    return render_template('editMenuItem.html', restaurant=restaurant, editItem=editItem)
+    return render_template('editMenuItem.html', restaurant=restaurant,
+     editItem=editItem)
 
 # form for deleting menu item from selected restaurant.
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/')
 def deleteMenuItem(restaurant_id, menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     deleteItem = session.query(MenuItem).filter_by(id=menu_id).one()
-    return render_template('deleteMenuItem.html', restaurant=restaurant, deleteItem=deleteItem)
+    return render_template('deleteMenuItem.html', restaurant=restaurant,
+     deleteItem=deleteItem)
 
 
 if __name__ == '__main__':
