@@ -15,11 +15,32 @@
         <p>Price:</p>
         <input type='text' size='30' name='price' placeholder = "{{ editItem.price }}">
 
-        <p>Course (currently set as {{ editItem.course }}):</p>
-        <input type="radio" name="course" value="entree">Entree<br>
-        <input type="radio" name="course" value="appetizer">Appetizer<br>
-        <input type="radio" name="course" value="dessert">Dessert<br>
-        <input type="radio" name="course" value="beverage">Beverage<br>
+        <p>Course:</p>
+
+
+        {% if editItem.course.lower() == 'appetizer' %}
+        <input type ='radio' name='course' value='Appetizer'checked >Appetizer
+        {%else%}
+        <input type ='radio' name='course' value='Appetizer' >Appetizer
+        {% endif %}
+
+        {% if editItem.course.lower() == 'entree' %}
+        <input type ='radio' name='course' value='Entree'checked >Entree
+        {%else%}
+        <input type ='radio' name='course' value='Entree' >Entree
+        {% endif %}
+
+        {% if editItem.course.lower() == 'dessert' %}
+        <input type ='radio' name='course' value='Dessert'checked >Dessert
+        {%else%}
+        <input type ='radio' name='course' value='Dessert' >Dessert
+        {% endif %}
+
+        {% if editItem.course.lower() == 'beverage' %}
+        <input type ='radio' name='course' value='Beverage'checked >Beverage
+        {%else%}
+        <input type ='radio' name='course' value='Beverage' >Beverage
+        {% endif %}
 
 
         <br>
