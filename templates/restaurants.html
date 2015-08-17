@@ -7,6 +7,16 @@
     <header><h1>Yum Tum Tum Restaurants:</h1></header>
     <a href='{{url_for('newRestaurant') }}'>Create new restaurant </a>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
 
     {% for restaurant in restaurants %}
 
