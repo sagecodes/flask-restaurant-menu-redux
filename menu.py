@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, jsonify
 
 app = Flask(__name__)
 
@@ -12,6 +12,28 @@ engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+# Make API Endpoint for full list of Restaurants(GET request)
+@app.route('/restaurants/JSON/')
+def restaurantsJSON():
+    restaurants = session.query(Restaurant).all()
+    return jsonify(Restaurants=[r.serialize for r in restaurants])
+
+
+# Make API Endpoint for full menu of selected restaurant(GET request)
+@app.route('/restaurant/<int:restaurant_id>/menu/JSON/')
+def restaurantMenuJSON(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id)
+    return jsonify(MenuItems=[i.serialize for i in items])
+
+
+# Make API Endpoint for selected menu item from selected restaurant(GET request)
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON/')
+def menuItemJSON(restaurant_id, menu_id):
+    menuItem = session.query(MenuItem).filter_by(id=menu_id).one()
+    return jsonify(MenuItem = menuItem.serialize)
 
 
 # Displays all the restaurants in a list. Home page of the application.
