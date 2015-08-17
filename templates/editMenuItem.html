@@ -4,39 +4,42 @@
     <title></title>
 </head>
 <body>
-    <h1>Editing  {{ editItem.name }}</h1>
+    <h1>Editing  {{ item.name }}</h1>
+
+    <form action ="{{ url_for('editMenuItem', restaurant_id = restaurant.id,
+        menu_id=item.id )}}" method="post">
 
         <p>Name:</p>
-        <input type='text' size='30' name='name' placeholder = "{{ editItem.name }}">
+        <input type='text' size='30' name='name' placeholder = "{{ item.name }}">
 
         <p>Description:</p>
-        <input type='text' size='30' name='description' placeholder = "{{ editItem.description }}">
+        <input type='text' size='30' name='description' placeholder = "{{ item.description }}">
 
         <p>Price:</p>
-        <input type='text' size='30' name='price' placeholder = "{{ editItem.price }}">
+        <input type='text' size='30' name='price' placeholder = "{{ item.price }}">
 
         <p>Course:</p>
 
 
-        {% if editItem.course.lower() == 'appetizer' %}
+        {% if item.course.lower() == 'appetizer' %}
         <input type ='radio' name='course' value='Appetizer'checked >Appetizer
         {%else%}
         <input type ='radio' name='course' value='Appetizer' >Appetizer
         {% endif %}
 
-        {% if editItem.course.lower() == 'entree' %}
+        {% if item.course.lower() == 'entree' %}
         <input type ='radio' name='course' value='Entree'checked >Entree
         {%else%}
         <input type ='radio' name='course' value='Entree' >Entree
         {% endif %}
 
-        {% if editItem.course.lower() == 'dessert' %}
+        {% if item.course.lower() == 'dessert' %}
         <input type ='radio' name='course' value='Dessert'checked >Dessert
         {%else%}
         <input type ='radio' name='course' value='Dessert' >Dessert
         {% endif %}
 
-        {% if editItem.course.lower() == 'beverage' %}
+        {% if item.course.lower() == 'beverage' %}
         <input type ='radio' name='course' value='Beverage'checked >Beverage
         {%else%}
         <input type ='radio' name='course' value='Beverage' >Beverage
@@ -44,7 +47,7 @@
 
 
         <br>
-        <input type='submit' value='Create'>
+        <input type='submit' value='Update'>
 
         <a href='{{url_for('showMenu', restaurant_id = restaurant.id) }}'>Cancel</a>
 
