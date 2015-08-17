@@ -73,7 +73,16 @@ def showMenu(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    return render_template('newMenuItem.html', restaurant=restaurant)
+    if request.method == 'POST':
+        newItem = MenuItem(name = request.form['name'], description=request.form['description'], price=request.form['price'], course=request.form['course'], restaurant_id =
+            restaurant_id)
+        session.add(newItem)
+        session.commit()
+        return redirect(url_for('showMenu', restaurant_id =
+            restaurant_id))
+    else:
+        return render_template('newmenuitem.html', restaurant =
+            restaurant)
 
 # form for editing menu item for selected restaurant.
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/',
