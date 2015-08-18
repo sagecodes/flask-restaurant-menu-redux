@@ -7,6 +7,10 @@ from database_setup import Base, Restaurant, MenuItem
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+# imports for Authentication and Authorization:
+from flask import session as login_session
+import random, string
+
 # create Session and connect to DB
 engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
