@@ -10,6 +10,7 @@ from sqlalchemy.orm import sessionmaker
 # imports for Authentication and Authorization:
 from flask import session as login_session
 import random, string
+from private import info
 
 # create Session and connect to DB
 engine = create_engine('sqlite:///restaurantmenu.db')
@@ -22,7 +23,8 @@ session = DBSession()
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
-    return render_template('login.html')
+    googleClientId = info.googleClientId
+    return render_template('login.html', googleClientId=googleClientId)
 
 
 # Make API Endpoint for full list of Restaurants(GET request)
