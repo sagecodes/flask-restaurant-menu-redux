@@ -37,7 +37,13 @@ def showLogin():
     googleClientId = info.googleClientId
     return render_template('login.html', googleClientId=googleClientId)
 
-
+@app.route('/gconnect', methods=['POST'])
+def gconnect():
+    # Validate state token:
+    if requests.args.get('state') != login_session['state']:
+        response = make_response(json.dumps('Invalid state parameter.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
 
 # Make API Endpoint for full list of Restaurants(GET request)
