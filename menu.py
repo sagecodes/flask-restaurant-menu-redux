@@ -58,6 +58,17 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+    # Check access token is valid
+    access_token = credentials.access_token
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
+            % access_token)
+    h = httplib2.Http()
+    result = json.loads(h.request(url, 'GET')[1])
+    # If error in access token info abort:
+    if result.get('error') is not None:
+        response = make_response(json.dumps(result.get('error')), 500)
+        response.headers['Content-Type'] = 'application/json'
+
 
 # Make API Endpoint for full list of Restaurants(GET request)
 @app.route('/restaurants/JSON/')
