@@ -12,6 +12,16 @@ from flask import session as login_session
 import random, string
 from private import info
 
+# Imports for callback method
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
+import httplib2
+import json
+from flask import make_response
+import requests
+
+
+
 # create Session and connect to DB
 engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
@@ -25,6 +35,8 @@ def showLogin():
     login_session['state'] = state
     googleClientId = info.googleClientId
     return render_template('login.html', googleClientId=googleClientId)
+
+
 
 
 # Make API Endpoint for full list of Restaurants(GET request)
