@@ -20,7 +20,8 @@ import json
 from flask import make_response
 import requests
 
-
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
 
 # create Session and connect to DB
 engine = create_engine('sqlite:///restaurantmenu.db')
