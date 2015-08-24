@@ -85,6 +85,14 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+    stored_credentials = login_session.get('credentials')
+    stored_gplus_id = login_session.get('gplus_id')
+    if stored_credentials is not None and gplus_id == stored_gplus_id:
+        response = make_response(json.dumps('Current user is already connected.'),
+                                 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
 
 # Make API Endpoint for full list of Restaurants(GET request)
 @app.route('/restaurants/JSON/')
