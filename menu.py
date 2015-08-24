@@ -84,7 +84,7 @@ def gconnect():
         print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
         return response
-
+    #check to see if user is already logged in:
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
@@ -92,6 +92,12 @@ def gconnect():
                                  200)
         response.headers['Content-Type'] = 'application/json'
         return response
+
+    # Store the access token in the session for later use.
+    login_session['credentials'] = credentials
+    login_session['gplus_id'] = gplus_id
+
+
 
 
 # Make API Endpoint for full list of Restaurants(GET request)
