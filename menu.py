@@ -22,6 +22,7 @@ import requests
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = "Restaurant Menu Application"
 
 # create Session and connect to DB
 engine = create_engine('sqlite:///restaurantmenu.db')
@@ -35,7 +36,7 @@ def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
     googleClientId = info.googleClientId
-    return render_template('login.html', googleClientId=googleClientId)
+    return render_template('login.html', googleClientId=googleClientId, STATE=state)
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
