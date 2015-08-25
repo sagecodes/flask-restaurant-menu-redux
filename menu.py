@@ -35,13 +35,12 @@ session = DBSession()
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
-    googleClientId = info.googleClientId
-    return render_template('login.html', googleClientId=googleClientId, STATE=state)
+    return render_template('login.html', STATE=state)
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token:
-    if requests.args.get('state') != login_session['state']:
+    if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -104,6 +103,10 @@ def gconnect():
     answer = requests.get(userinfo_url, params=params)
 
     data = answer.json()
+
+    login_session['username'] = data['name']
+    login_session['picture'] = data['picture']
+    login_session['email'] = data['email']
 
     output = ''
     output += '<h1>Welcome, '
