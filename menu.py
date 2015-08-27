@@ -302,6 +302,13 @@ def deleteMenuItem(restaurant_id, menu_id):
     else:
         return render_template('deletemenuitem.html', restaurant=restaurant, item = deleteItem)
 
+def getUserId(email):
+    try:
+        user = session.query(User).filter_by(email = email).one()
+        return user.id
+    except:
+        return None
+
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id = user_id).one()
     return user
