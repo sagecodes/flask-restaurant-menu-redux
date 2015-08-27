@@ -25,7 +25,7 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Restaurant Menu Application"
 
 # create Session and connect to DB
-engine = create_engine('sqlite:///restaurantmenu.db')
+engine = create_engine('sqlite:///restaurantmenuwithusers.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
