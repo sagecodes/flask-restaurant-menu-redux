@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yum Tum Tum Restaurants</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header><h1>Yum Tum Tum Restaurants:</h1></header>
+    <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+          <p class="flash">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    {% for restaurant in restaurants %}
+
+    <p>
+
+        <a class="restaurant-name" href='{{url_for('showMenu', restaurant_id = restaurant.id) }}'>
+        {{restaurant.name}}
+        </a>
+
+    </p>
+
+
+    {% endfor %}
+
+
+</body>
+</html>

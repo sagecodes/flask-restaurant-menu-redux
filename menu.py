@@ -129,6 +129,7 @@ def gconnect():
 #DISCONNECT - Revoke a current Users's token and reset their login_session.
 
 @app.route("/gdisconnect/")
+@app.route("/logout/")
 def gdisconnect():
     #only disconnect a connected user.
     credentials = login_session.get('credentials')
