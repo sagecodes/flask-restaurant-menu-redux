@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify, f
 app = Flask(__name__)
 
 
-from database_setup import Base, Restaurant, MenuItem
+from database_setup import Base, Restaurant, MenuItem, User
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -109,7 +109,7 @@ def gconnect():
     login_session['email'] = data['email']
 
     # check if user exists, if not create new user:
-    user_id = getUserID(login_session['email'])
+    user_id = getUserId(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -189,6 +189,8 @@ def menuItemJSON(restaurant_id, menu_id):
 @app.route('/restaurants/')
 def showRestaurants():
     restaurants = session.query(Restaurant).all()
+    if 'username' not in login_session:
+        return render_template('publicrestaurants.html', restaurants=restaurants)
     return render_template('restaurants.html', restaurants=restaurants)
 
 

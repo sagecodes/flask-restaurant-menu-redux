@@ -16,6 +16,16 @@ class User(Base):
   email = Column(String(250), nullable = False)
   picture = Column(String(250))
 
+  @property
+  def serialize(self):
+      return {
+        'id' : self.id,
+        'name' : self.name,
+        'email' : self.email,
+        'picture' : self.picture,
+
+      }
+
 class Restaurant(Base):
 
   __tablename__ = 'restaurant'
