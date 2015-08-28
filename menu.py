@@ -230,9 +230,13 @@ def editRestaurant(restaurant_id):
 # Page to confirm deleting selected restaurant.
 @app.route('/restaurant/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
+    deleteRestaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    deleteRestaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    if deleteRestaurant.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant');}</script><body onload='myFunction()''>"
+
+
     if request.method == 'POST':
         session.delete(deleteRestaurant)
         session.commit()
