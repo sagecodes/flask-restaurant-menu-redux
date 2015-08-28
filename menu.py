@@ -191,7 +191,7 @@ def menuItemJSON(restaurant_id, menu_id):
 def showRestaurants():
     restaurants = session.query(Restaurant).all()
     if 'username' not in login_session:
-        return render_template('publicrestaurants.html', restaurants=restaurants)
+        return render_template('publicRestaurants.html', restaurants=restaurants)
     return render_template('restaurants.html', restaurants=restaurants)
 
 
@@ -201,8 +201,7 @@ def newRestaurant():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newRestaurant = Restaurant(name = request.form['name'],
-                            user_id=login_session['user_id'])
+        newRestaurant = Restaurant(name = request.form['name'], user_id = login_session['user_id'])
         session.add(newRestaurant)
         session.commit()
         flash("New restaurant has been created!")
@@ -248,8 +247,12 @@ def deleteRestaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id)
-    return render_template('menu.html', restaurant=restaurant, items=items)
+    creator = getUserInfo(restaurant.user_id)
+    items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id).all()
+    if 'username' not in login_session or creator.id != login_session["user_id"]:
+        return render_template('publicMenu.html', restaurant=restaurant, items=items, creator=creator)
+    return render_template('menu.html', restaurant=restaurant, items=items,
+                             creator = creator)
 
 
 # form for creating new menu item for selected restaurant.
