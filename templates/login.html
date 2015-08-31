@@ -51,6 +51,8 @@
         }); }}
     </script>
 
+
+
     <!--FACEBOOK SIGN IN -->
     <script>
       window.fbAsyncInit = function() {
@@ -59,7 +61,7 @@
         cookie     : true,  // enable cookies to allow the server to access
                             // the session
         xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.2' // use version 2.2
+        version    : 'v2.4' // use version 2.4
       });
       };
       // Load the SDK asynchronously
@@ -89,7 +91,7 @@
             if (result) {
               $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
              setTimeout(function() {
-              window.location.href = "/restaurant";
+              window.location.href = "/restaurants";
              }, 4000);
 
           } else {
