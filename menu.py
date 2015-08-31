@@ -222,11 +222,11 @@ def gdisconnect():
 
     if result['status'] == '200':
         # Reset the user's sesson.
-        del login_session['credentials']
-        del login_session['gplus_id']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
+        # del login_session['credentials']
+        # del login_session['gplus_id']
+        # del login_session['username']
+        # del login_session['email']
+        # del login_session['picture']
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
@@ -245,6 +245,8 @@ def disconnect():
     if 'provider' in login_session:
         if login_session['provider'] == 'google':
             gdisconnect()
+            del login_session['gplus_id']
+            del login_session['credentials']
 
         if login_session['provider'] == 'facebook':
             fbdisconnect()
