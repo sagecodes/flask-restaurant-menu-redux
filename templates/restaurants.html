@@ -5,7 +5,18 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header><h1>Yum Tum Tum Restaurants:</h1></header>
+
+    <header>
+        <div class="login-logout">
+            {% if 'username' not in session %}
+                <a href="{{url_for('showLogin')}}"> Login</a>
+            {% else %}
+                <a href="{{url_for('disconnect')}}">Logout</a>
+            {% endif %}
+        </div>
+
+        <h1>Yum Tum Tum Restaurants:</h1>
+    </header>
     <a class="button-simple" href='{{url_for('newRestaurant') }}'>Create new restaurant </a>
     <br>
     {% with messages = get_flashed_messages() %}
