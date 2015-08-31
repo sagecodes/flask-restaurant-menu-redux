@@ -103,7 +103,7 @@ def fbconnect():
     return output
 
 
-@app.route('/fbdisconnect')
+@app.route('/fbdisconnect/')
 def fbdisconnect():
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
@@ -183,6 +183,8 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+    # ADD PROVIDER TO LOGIN SESSION
+    login_session['provider'] = 'google'
 
     # check if user exists, if not create new user:
     user_id = getUserId(login_session['email'])
@@ -205,7 +207,6 @@ def gconnect():
 #DISCONNECT - Revoke a current Users's token and reset their login_session.
 
 @app.route("/gdisconnect/")
-@app.route("/logout/")
 def gdisconnect():
     #only disconnect a connected user.
     credentials = login_session.get('credentials')
@@ -236,6 +237,28 @@ def gdisconnect():
             json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
+
+@app.route('/disconnect')
+@app.route("/logout/")
+def disconnect():
+    if 'provider' in login_session:
+        if login_session['provider'] == 'google':
+            gdisconnect()
+
+        if login_session['provider'] == 'facebook':
+            fbdisconnect()
+            del login_session['facebook_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        del login_session['user_id']
+        del login_session['provider']
+        flash("You have successfully been logged out.")
+        return redirect(url_for('showRestaurants'))
+    else:
+        flash("You were not logged in")
+        return redirect(url_for('showRestaurants'))
 
 
 
